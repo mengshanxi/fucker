@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<title>管理工具</title>
+<meta charset="UTF-8" />
+<style>
+body, td, th {
+	/* 	font-family: Verdana, Arial, Helvetica, sans-serif; */
+	font-family: 微软雅黑;
+	font-size: 14px;
+	color: #1d1007;
+	line-height: 24px
+}
+
+.divcss5 {
+	border: 1px dashed #000000;
+	width: 600px;
+	font-size: 10px;
+	padding-left: 5px;
+	padding-top: 5px;
+	margin-top: 5px;
+	margin-bottom: 5px
+}
+
+.divcss5-1 {
+	border-left: 1px dashed #000;
+	height: 50px;
+	width: 350px
+}
+
+.divcss5-2 {
+	border-right: 1px dashed #000;
+	height: 50px;
+	width: 350px
+}
+
+.divcss5-3 {
+	border-top: 1px dashed #000;
+	height: 50px;
+	width: 350px
+}
+
+.divcss5-4 {
+	border-bottom: 1px dashed #000;
+	height: 50px;
+	width: 350px
+}
+
+.divcss5-5 {
+	border: 1px dashed #000;
+	border-right: 0;
+	height: 50px;
+	width: 350px
+}
+/* www.divcss5.com实例 */
+</style>
+
+</head>
+<body>
+	<center>
+		<h1>管理工具</h1>
+	</center>
+	<hr />
+	1.一键清理
+	<br />
+	<a href="/clear">Go</a>
+	<br />
+	<br />
+	<br />2. MogoDB工具
+	<br />
+	<a href="">Go</a>
+	<br />
+	<br /> 3. 拨测服务检测
+	<div class="divcss5">
+		<p th:text="${dialStatus}"></p>
+	</div>
+	<br /> 4. MogoDB 概览
+	<div class="divcss5">
+		<p th:each="mongo:${mongoOverview}" th:text="${mongo}"></p>
+	</div>
+	<br /> 5. 配置 概览
+	<div class="divcss5">
+		<p th:each="config:${configOverview}" th:text="${config}"></p>
+	</div>
+	<br /> 6. NPV服务状态
+	<div class="divcss5">
+		<p th:text="${npvStatus}"></p>
+	</div>
+</body>
+</html>
