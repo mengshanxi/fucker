@@ -1,0 +1,19 @@
+server:
+  port: 8080
+  context-path: /fucker
+spring:
+  datasource:
+    name: test
+    url: jdbc:mysql://127.0.0.1:3306/local
+    username: root
+    password: abcd1234
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+mybatis:
+  mapper-locations: classpath:mybatis/*.xml
+  type-aliases-package: com.self.fucker.entity
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
