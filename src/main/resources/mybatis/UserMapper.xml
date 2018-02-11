@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.self.fucker.mapper.UserMapper">
+	<resultMap id="userMap" type="com.self.fucker.entity.User">
+		<id property="userId" column="user_id" />
+		<result property="username" column="username" />
+		<result property="password" column="password" />
+		<result property="fullname" column="fullname" />
+		<result property="mobile" column="mobile" />
+		<result property="email" column="email" />
+		<result property="lastModifyDate" column="last_modify_date" />
+	</resultMap>
+
+	<select id="getUserList" resultMap="userMap">
+		SELECT
+		user_id,
+		username,
+		password,
+		fullname,
+		mobile,
+		email,
+		last_modify_date
+		FROM
+		t_user
+		WHERE
+		1 = 1
+		<if test="username != null and username != ''.toString()">
+			and username like CONCAT('%','${username}','%')
+		</if>
+		<if test="mobile != null and mobile != ''.toString()">
+			and mobile like CONCAT('%','${mobile}','%')
+		</if>
+	</select>
+
+	<select id="getCountStartWithUsername" resultType="java.lang.Integer">
+		SELECT
+		count(user_id)
+		FROM
+		t_user
+		WHERE
+		username like
+		CONCAT('${username}','%')
+	</select>
+
+	<select id="getUserByUsernameAndPass" resultMap="userMap">
+		SELECT
+		user_id,
+		username,
+		fullname,
+		mobile,
+		email,
+		last_modify_date
+		FROM
+		t_user
+		WHERE
+		username= #{username}
+		and
+		password=
+		#{password}
+		and user_type='admin'
+	</select>
+
+	<select id="getUserByProps" resultMap="userMap">
+		SELECT
+		user_id,
+		username,
+		fullname,
+		mobile,
+		email,
+		last_modify_date
+		FROM
+		t_user
+		WHERE
+		1 = 1
+		<if test="mobile != null and mobile != ''.toString()">
+			and mobile = #{mobile}
+		</if>
+		<if test="email != null and email != ''.toString()">
+			and email = #{email}
+		</if>
+	</select>
+
+
+
+	<delete id="delete">
+		delete from t_user
+		WHERE
+		user_id =
+		#{userId}
+	</delete>
+
+	<select id="getById" resultMap="userMap">
+		SELECT
+		user_id,
+		username,
+		password,
+		fullname,
+		mobile,
+		email,
+		last_modify_date
+		FROM
+		t_user
+		WHERE
+		user_id
+		=
+		#{userId}
+	</select>
+
+	<select id="getUserByName" resultMap="userMap">
+		SELECT
+		user_id,
+		username,
+		email,
+		last_modify_date
+		FROM
+		t_user
+		WHERE
+		username
+		=
+		#{username}
+	</select>
+	<update id="updateByPrimaryKeySelective">
+		update t_user
+		<set>
+			<if test="fullname != null">
+				fullname = #{fullname},
+			</if>
+			<if test="password != null">
+				password = #{password},
+			</if>
+			last_modify_date = now(),
+		</set>
+		where user_id = #{userId,jdbcType=INTEGER}
+	</update>
+	<insert id="insertSelective">
+		insert into t_user
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="username != null">
+				username,
+			</if>
+			<if test="password != null">
+				password,
+			</if>
+			<if test="mobile != null">
+				mobile,
+			</if>
+			<if test="fullname != null">
+				fullname,
+			</if>
+			<if test="email != null">
+				email,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="userId != null">
+				#{userId,jdbcType=INTEGER},
+			</if>
+			<if test="username != null">
+				#{username,jdbcType=VARCHAR},
+			</if>
+			<if test="password != null">
+				#{password,jdbcType=CHAR},
+			</if>
+			<if test="mobile != null">
+				#{mobile,jdbcType=VARCHAR},
+			</if>
+			<if test="fullname != null">
+				#{fullname,jdbcType=VARCHAR},
+			</if>
+			<if test="email != null">
+				#{email,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+</mapper>
